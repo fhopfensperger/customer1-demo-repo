@@ -1,0 +1,17 @@
+apiVersion: database.allianz.io/v1alpha1
+kind: PostgreSQLInstance
+metadata:
+  name: my-db
+  namespace: default
+spec:
+  parameters:
+    storageGB: 20
+    dbSubnetGroupName: deletesubnetgroup
+    vpcSecurityGroupIds:
+      - sg-09528874fa5f159eb
+  compositionSelector:
+    matchLabels:
+      provider: aws
+      vpc: default
+  writeConnectionSecretToRef:
+    name: db-conn
