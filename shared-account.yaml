@@ -1,0 +1,17 @@
+apiVersion: account.scc.allianz.io/v1alpha1
+kind: Account
+metadata:
+  name: crossdelaccount
+spec:
+  forProvider:
+    accountData:
+      accountOwners:
+        - florian.hopfensperger@allianz.de
+        - dhouha.maatoug@allianz.de
+      accountTag: crossp-fcp-del
+      customerEnvironment: dev
+      debtorNumber: "1234567890"
+      siNumber: "SI1234567"
+    cloudProvider: aws
+  providerConfigRef:
+    name: default
