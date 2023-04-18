@@ -1,0 +1,76 @@
+---
+apiVersion: apiextensions.crossplane.io/v1
+kind: CompositeResourceDefinition
+metadata:
+  name: xdemos.composite.demo.io
+spec:
+  group: composite.demo.io
+  names:
+    kind: XDemo
+    plural: xdemos
+    singular: xdemo
+  claimNames:
+    kind: Demo
+    plural: demos
+    singular: demo
+  versions:
+    - name: v1alpha1
+      served: true
+      referenceable: true
+      schema:
+        openAPIV3Schema:
+          type: object
+          properties:
+            spec:
+              type: object
+              required:
+                - applicationServer
+                - database
+              properties:
+                applicationServer:
+                  type: object
+                  required:
+                    - host
+                    - port
+                  properties:
+                    host:
+                      description: 'host name'
+                      type: string
+                    port:
+                      description: 'port (default: 8080)'
+                      format: int32
+                      type: integer
+                    basePath:
+                      description: 'basePath of appServer (default: "/")'
+                      type: string
+                    exportMetrics:
+                      description: 'exportMetrics enables metrics exporter (default: false)'
+                      type: boolean
+                database:
+                  type: object
+                  required:
+                    - type
+                    - volume
+                  properties:
+                    type:
+                      description: 'type of DB instance (available types: relational, document, graph)'
+                      type: string
+                      enum:
+                        - relational
+                        - document
+                        - graph
+                    volume:
+                      description: 'volume of storage size (available values: 20Gb, 50Gb, 100Gb)'
+                      type: string
+                      enum:
+                        - 20Gb
+                        - 50Gb
+                        - 100Gb
+                    autoBackup:
+                      description: 'autoBackup enables automatic backup of records (default: false)'
+                      type: boolean
+                providerConfigRef:
+                  type: object
+                  properties:
+                    name:
+                      type: string
